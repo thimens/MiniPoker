@@ -40,7 +40,7 @@ namespace MiniPoker.Tests
 
             // assert
             var exception = Assert.Throws<ArgumentException>("name", () => new Player("", cards));
-            Assert.Equal("Name can't be empty or null", exception.Message);
+            Assert.Equal("Name can't be empty or null (Parameter 'name')", exception.Message);
         }
 
         [Fact]

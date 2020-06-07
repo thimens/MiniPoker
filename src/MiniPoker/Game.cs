@@ -10,7 +10,7 @@ namespace MiniPoker
     {
         public IEnumerable<Player> GetWinners(IEnumerable<Player> players)
         {
-            var gamePlayers = players.Select(p => new GamePlayer(p));
+            var gamePlayers = players.Select(p => new GamePlayer(p)).ToList();
 
             // validate players
             ValidatePlayers(gamePlayers);

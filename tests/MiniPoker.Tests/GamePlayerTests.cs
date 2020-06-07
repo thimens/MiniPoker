@@ -129,6 +129,17 @@ namespace MiniPoker.Tests
 
                 new object[] {
                     new List<Card> {
+                        new Card(CardRank.Seven, CardSuit.Spades),
+                        new Card(CardRank.Seven, CardSuit.Hearts),
+                        new Card(CardRank.Eight, CardSuit.Clubs),
+                        new Card(CardRank.Eight, CardSuit.Diamonds),
+                        new Card(CardRank.King, CardSuit.Diamonds)
+                    },
+                    (int)Hand.Pair, 2, 808, 3, 130707
+                },
+
+                new object[] {
+                    new List<Card> {
                         new Card(CardRank.Five, CardSuit.Spades),
                         new Card(CardRank.Five, CardSuit.Hearts),
                         new Card(CardRank.Five, CardSuit.Clubs),
