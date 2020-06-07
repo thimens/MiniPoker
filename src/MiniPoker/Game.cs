@@ -27,8 +27,6 @@ namespace MiniPoker
             return winners.Select(w => w.PlayerInfo);
         }
 
-
-
         private void ValidatePlayers(IEnumerable<GamePlayer> players)
         {
             // validate player cards
@@ -50,7 +48,7 @@ namespace MiniPoker
 
         }
 
-        private IEnumerable<GamePlayer> Untie(IEnumerable<GamePlayer> players, Hand score)
+        private IEnumerable<GamePlayer> Untie(IEnumerable<GamePlayer> players, Hand hand)
         {
             // check if only one winner
             if (players.Count() == 1)
@@ -63,7 +61,7 @@ namespace MiniPoker
 
             var winners = players.GroupBy(p => p.HandCardsPoints).OrderByDescending(p => p.Key).First();
 
-            return (score == Hand.Flush || score == Hand.HighCard || winners.Count() == 1) ?
+            return (hand == Hand.Flush || hand == Hand.HighCard || winners.Count() == 1) ?
                     winners :
                     winners.GroupBy(p => p.TieBreakCardsPoints).OrderByDescending(p => p.Key).First();
         }                

@@ -19,12 +19,11 @@ namespace MiniPoker.Tests
                 new Card(CardRank.Ace, CardSuit.Diamonds),
                 new Card(CardRank.King, CardSuit.Spades)
             };
-            var player = new Player("Player 1", cards);
-            var gamePlayer = new GamePlayer(player);
+            var player = new GamePlayer(new Player("Player 1", cards));
 
             // assert
-            Assert.NotNull(gamePlayer);
-            Assert.Equal(Hand.None, gamePlayer.Hand);
+            Assert.NotNull(player);
+            Assert.Equal(Hand.None, player.Hand);
         }
 
         [Fact]
@@ -45,11 +44,10 @@ namespace MiniPoker.Tests
                 new Card(CardRank.Ace, CardSuit.Diamonds),
                 new Card(CardRank.King, CardSuit.Spades)
             };
-            var player = new Player("Player 1", cards);
-            var gamePlayer = new GamePlayer(player);
+            var player = new GamePlayer(new Player("Player 1", cards));
 
             // assert
-            Assert.True(gamePlayer.ValidateCards());
+            Assert.True(player.ValidateCards());
         }
 
         [Fact]
