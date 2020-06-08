@@ -1,8 +1,7 @@
 ﻿namespace MiniPoker
 {
     public enum CardRank
-    {
-        None = 0,        
+    {       
         Two = 2,
         Three,
         Four,

@@ -6,6 +6,31 @@ namespace MiniPoker
 {
     public sealed class Game
     {
+        public IReadOnlyCollection<Player> Deal(params string[] playersNames)
+        {
+            // validate number of players
+            if (playersNames.Length < 2 || playersNames.Length > 10)
+                throw new ArgumentException("There must be between 2 and 10 players", nameof(playersNames));
+
+            // validate players names
+            ValidateNames(playersNames);
+
+            var players = new Dictionary<string, List<Card>>();
+
+            // create new players as a dictonary
+            foreach (var name in playersNames)
+                players.Add(name, new List<Card>());
+
+            var deck = ShuffleDeck();
+
+            // distribute cards in using round robin logic
+            for(int round = 0; round < 5; round++)
+                foreach (var player in players)
+                    player.Value.Add(deck.Dequeue());
+
+            return players.Select(p => new Player(p.Key, p.Value.OrderByDescending(c => c.Rank))).ToList().AsReadOnly();
+        }
+
         public IEnumerable<Player> GetWinners(IEnumerable<Player> players)
         {
             var gamePlayers = players.Select(p => new GamePlayer(p)).ToList();
@@ -25,6 +50,29 @@ namespace MiniPoker
             return winners.Select(w => w.PlayerInfo);
         }
 
+        private Queue<Card> ShuffleDeck()
+        {
+            var deck = new List<Card>();
+            var shuffleDeck = new Queue<Card>();
+
+            // create deck
+            foreach (var suit in Enum.GetValues(typeof(CardSuit)).Cast<CardSuit>())
+                foreach (var rank in Enum.GetValues(typeof(CardRank)).Cast<CardRank>())
+                    deck.Add(new Card(rank, suit));
+
+            var rand = new Random();
+
+            // remove random card from deck and add it to shuffled deck
+            while (deck.Any())
+            {
+                var index = rand.Next(0, deck.Count - 1);
+                shuffleDeck.Enqueue(deck[index]);
+                deck.RemoveAt(index);
+            }
+
+            return shuffleDeck;
+        }
+
         private void ValidatePlayers(IEnumerable<GamePlayer> players)
         {
             // validate player cards
@@ -39,11 +87,17 @@ namespace MiniPoker
                     throw new ArgumentException($"Invalid cards. Duplicated cards are not allowed");
 
             // check for duplicated names
-            var names = new HashSet<string>();
-            foreach (var name in players.Select(p => p.PlayerInfo.Name))
-                if (!names.Add(name))
-                    throw new ArgumentException($"Two or more players have the same name '{name}'");
+            ValidateNames(players.Select(p => p.PlayerInfo.Name));                
+        }
 
+        private void ValidateNames(IEnumerable<string> names)
+        {
+            var newNames = new HashSet<string>();
+            foreach (var name in names)
+                if (!newNames.Add(name))
+                    throw new ArgumentException($"Two or more players have the same name '{name}'");
+                else if (string.IsNullOrWhiteSpace(name))
+                    throw new ArgumentException($"Name can't be empty or null");
         }
 
         private IEnumerable<GamePlayer> Untie(IEnumerable<GamePlayer> players, Hand hand)

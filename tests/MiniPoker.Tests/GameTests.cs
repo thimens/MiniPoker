@@ -113,6 +113,57 @@ namespace MiniPoker.Tests
             Assert.Throws<ArgumentNullException>("player", () => game.GetWinners(players));
         }
 
+        [Fact]
+        public void DealCards_FivePlayers_ReturnPlayers()
+        {
+            // arrange
+            var names = new string[] { "Player1", "Player2", "Player3", "Player4", "Player5" };
+            var game = new Game();
+
+            // act
+            var players = game.Deal(names);
+
+            // assert
+            Assert.Equal(5, players.Count);
+            Assert.Equal(25, players.SelectMany(p => p.Cards).Count());
+        }
+
+        [Fact]
+        public void DealCards_NoPlayers_ThrowsException()
+        {
+            // arrange
+            var names = new string[] { };
+            var game = new Game();
+
+            // assert
+            var exception = Assert.Throws<ArgumentException>("playersNames", () => game.Deal(names));
+            Assert.Equal("There must be between 2 and 10 players (Parameter 'playersNames')", exception.Message);
+        }
+
+        [Fact]
+        public void DealCards_DuplicatedNames_ThrowsException()
+        {
+            // arrange
+            var names = new string[] { "Player1", "Player2", "Player2" };
+            var game = new Game();
+
+            // assert
+            var exception = Assert.Throws<ArgumentException>(() => game.Deal(names));
+            Assert.Equal("Two or more players have the same name 'Player2'", exception.Message);
+        }
+
+        [Fact]
+        public void DealCards_EmptyName_ThrowsException()
+        {
+            // arrange
+            var names = new string[] { "Player1", "Player2", string.Empty };
+            var game = new Game();
+
+            // assert
+            var exception = Assert.Throws<ArgumentException>(() => game.Deal(names));
+            Assert.Equal("Name can't be empty or null", exception.Message);
+        }
+
         [Theory]
         [MemberData(nameof(GetWinnersData))]
         public void GetWinners(Player player1, Player player2, Player player3, string winnersName)
