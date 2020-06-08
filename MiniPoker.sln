@@ -15,6 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniPoker.GameSimulator", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8E771D0F-3B9F-4203-A2AF-9BB44237D799}"
 	ProjectSection(SolutionItems) = preProject
+		license.txt = license.txt
 		README.md = README.md
 	EndProjectSection
 EndProject
