@@ -1,5 +1,4 @@
-﻿using MiniPoker.Enum;
-using Xunit;
+﻿using Xunit;
 
 namespace MiniPoker.Tests
 {
@@ -124,6 +123,23 @@ namespace MiniPoker.Tests
 
             // assert
             Assert.True(card1.GetHashCode() == card2.GetHashCode());
+        }
+
+        [Fact]
+        public void CardToString()
+        {
+            var card1 = new Card(CardRank.Five, CardSuit.Diamonds);
+            var card2 = new Card(CardRank.Ace, CardSuit.Hearts);
+            var card3 = new Card(CardRank.King, CardSuit.Clubs);
+            var card4 = new Card(CardRank.Queen, CardSuit.Spades);
+            var card5 = new Card(CardRank.Jack, CardSuit.Diamonds);
+
+            // assert
+            Assert.Equal("5" + (char)CardSuit.Diamonds, card1.ToString());
+            Assert.Equal("A" + (char)CardSuit.Hearts, card2.ToString());
+            Assert.Equal("K" + (char)CardSuit.Clubs, card3.ToString());
+            Assert.Equal("Q" + (char)CardSuit.Spades, card4.ToString());
+            Assert.Equal("J" + (char)CardSuit.Diamonds, card5.ToString());
         }
     }
 }

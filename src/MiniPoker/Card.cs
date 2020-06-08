@@ -1,7 +1,4 @@
-﻿using MiniPoker.Enum;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace MiniPoker
 {
@@ -16,6 +13,11 @@ namespace MiniPoker
         public CardRank Rank { get; }
 
         public CardSuit Suit { get; }
+
+        public override string ToString()
+        {
+            return $"{(Rank <= CardRank.Ten ? ((int)Rank).ToString() : Rank.ToString().Substring(0, 1))}{(char)Suit}";
+        }
 
         public override bool Equals(object obj)
         {

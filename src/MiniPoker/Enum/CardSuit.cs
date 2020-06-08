@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiniPoker.Enum
+﻿namespace MiniPoker
 {
     public enum CardSuit
     {
-        Spades,
-        Clubs,
-        Diamonds,
-        Hearts
+        Hearts = 9829,
+        Diamonds = 9830,
+        Clubs = 9827,
+        Spades = 9824
     }
 }

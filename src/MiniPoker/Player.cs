@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MiniPoker
 {
@@ -16,7 +14,6 @@ namespace MiniPoker
 
         public string Name { get; }
 
-        // need to remove readonly if draw cards enabled in the future
         public IReadOnlyCollection<Card> Cards { get; }
     }
 }

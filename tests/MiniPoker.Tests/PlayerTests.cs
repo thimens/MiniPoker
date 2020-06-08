@@ -1,7 +1,5 @@
-﻿using MiniPoker.Enum;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace MiniPoker.Tests
