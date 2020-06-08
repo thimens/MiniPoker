@@ -1,7 +1,7 @@
 
 # MiniPoker
 
-A short version of the Poker game. Five cards, no draws, just deal and check for winners.
+A short version of the Poker game. One deck (52 cards), five cards per player (up to 10 players), no draws, just deal and check for winners.
 
 This game uses just a subset of the regular poker hands:
 
@@ -13,13 +13,11 @@ This game uses just a subset of the regular poker hands:
 Obs: 4 cards of the same rank are assumed to be Three of a kind, the fourth card is not used.
 
 In case of ties, the cards of the hand (cards that form one of the hands above) are used in descendent order to choose the winner. 
-If still a tie, the remaining cards are used, also in descending order, and if after that there were still tied players, they are assumed the winners.
-
+If still a tie, the remaining cards are used, also in descending order, and if after that there were still tied players, they are the winners.
 
 ## Usage
 
 The game starts creating a new `Game`. The `Deal` method returns the players and their cards (2 up to 10 players).  Finally, use the `GetWinners` method to return the winners.
-
 
 The code:
 
