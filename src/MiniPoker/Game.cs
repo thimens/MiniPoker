@@ -9,8 +9,7 @@ namespace MiniPoker
         public IReadOnlyCollection<Player> Deal(params string[] playersNames)
         {
             // validate number of players
-            if (playersNames.Length < 2 || playersNames.Length > 10)
-                throw new ArgumentException("There must be between 2 and 10 players", nameof(playersNames));
+            ValidateNumberOfPlayers(playersNames?.Length);
 
             // validate players names
             ValidateNames(playersNames);
@@ -33,6 +32,9 @@ namespace MiniPoker
 
         public IEnumerable<Player> GetWinners(IEnumerable<Player> players)
         {
+            // validate number of players
+            ValidateNumberOfPlayers(players?.Count());
+
             var gamePlayers = players.Select(p => new GamePlayer(p)).ToList();
 
             // validate players
@@ -98,6 +100,12 @@ namespace MiniPoker
                     throw new ArgumentException($"Two or more players have the same name '{name}'");
                 else if (string.IsNullOrWhiteSpace(name))
                     throw new ArgumentException($"Name can't be empty or null");
+        }
+
+        private void ValidateNumberOfPlayers(int? playersCount)
+        {
+            if (playersCount == null || playersCount < 2 || playersCount > 10)
+                throw new ArgumentException("There must be between 2 and 10 players");
         }
 
         private IEnumerable<GamePlayer> Untie(IEnumerable<GamePlayer> players, Hand hand)

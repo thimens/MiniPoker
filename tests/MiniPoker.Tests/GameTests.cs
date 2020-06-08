@@ -8,7 +8,7 @@ namespace MiniPoker.Tests
     public class GameTests
     {
         [Fact]
-        public void GetWinners_InvalidNullCards_ThrowsException()
+        public void GetWinners_NullCards_ThrowsException()
         {
             // arrange
             var cards = new List<Card> {
@@ -37,7 +37,7 @@ namespace MiniPoker.Tests
         }
 
         [Fact]
-        public void GetWinners_InvalidDuplicatedCards_ThrowsException()
+        public void GetWinners_DuplicatedCards_ThrowsException()
         {
             // arrange
             var cards = new List<Card> {
@@ -66,7 +66,7 @@ namespace MiniPoker.Tests
         }
 
         [Fact]
-        public void GetWinners_InvalidDuplicatedNames_ThrowsException()
+        public void GetWinners_DuplicatedNames_ThrowsException()
         {
             // arrange
             var cards = new List<Card> {
@@ -95,7 +95,7 @@ namespace MiniPoker.Tests
         }
 
         [Fact]
-        public void GetWinners_InvalidNullPlayer_ThrowsException()
+        public void GetWinners_NullPlayer_ThrowsException()
         {
             // arrange
             var cards = new List<Card> {
@@ -111,6 +111,33 @@ namespace MiniPoker.Tests
 
             // assert
             Assert.Throws<ArgumentNullException>("player", () => game.GetWinners(players));
+        }
+
+        [Fact]
+        public void GetWinners_NoPlayers_ThrowsException()
+        {
+            // arrange
+            var game = new Game();
+
+            // assert
+            var exception = Assert.Throws<ArgumentException>(() => game.GetWinners(null));
+            Assert.Equal("There must be between 2 and 10 players", exception.Message);
+        }
+
+        [Theory]
+        [MemberData(nameof(GetWinnersData))]
+        public void GetWinners(Player player1, Player player2, Player player3, string winnersName)
+        {
+            // arrange
+            var players = new List<Player> { player1, player2, player3 };
+            var game = new Game();
+
+            // act
+            var winners = game.GetWinners(players);
+            var names = string.Join(",", winners.Select(w => w.Name));
+
+            // assert
+            Assert.Equal(winnersName, names);
         }
 
         [Fact]
@@ -136,8 +163,19 @@ namespace MiniPoker.Tests
             var game = new Game();
 
             // assert
-            var exception = Assert.Throws<ArgumentException>("playersNames", () => game.Deal(names));
-            Assert.Equal("There must be between 2 and 10 players (Parameter 'playersNames')", exception.Message);
+            var exception = Assert.Throws<ArgumentException>(() => game.Deal(names));
+            Assert.Equal("There must be between 2 and 10 players", exception.Message);
+        }
+
+        [Fact]
+        public void DealCards_NullPlayers_ThrowsException()
+        {
+            // arrange
+            var game = new Game();
+
+            // assert
+            var exception = Assert.Throws<ArgumentException>(() => game.Deal());
+            Assert.Equal("There must be between 2 and 10 players", exception.Message);
         }
 
         [Fact]
@@ -164,21 +202,6 @@ namespace MiniPoker.Tests
             Assert.Equal("Name can't be empty or null", exception.Message);
         }
 
-        [Theory]
-        [MemberData(nameof(GetWinnersData))]
-        public void GetWinners(Player player1, Player player2, Player player3, string winnersName)
-        {
-            // arrange
-            var players = new List<Player> { player1, player2, player3 };
-            var game = new Game();
-
-            // act
-            var winners = game.GetWinners(players);
-            var names = string.Join(",", winners.Select(w => w.Name));
-
-            // assert
-            Assert.Equal(winnersName, names);
-        }
 
         public static IEnumerable<object[]> GetWinnersData =>
             new List<object[]>
