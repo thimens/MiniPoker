@@ -9,7 +9,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <ProjectGuid>F6E83DAD-034E-4B89-A18C-6490F005B8AE</ProjectGuid>
     <Authors>Thiago Mendes</Authors>
-    <AssemblyName>Thimens.MiniPoker</AssemblyName>
+    <AssemblyName>MiniPoker</AssemblyName>
     <RootNamespace>MiniPoker</RootNamespace>
     <Copyright>Thiago Mendes</Copyright>
   </PropertyGroup>
