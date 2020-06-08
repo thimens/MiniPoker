@@ -22,7 +22,7 @@ namespace MiniPoker
 
             var deck = ShuffleDeck();
 
-            // distribute cards in using round robin logic
+            // distribute cards using round robin logic
             for(int round = 0; round < 5; round++)
                 foreach (var player in players)
                     player.Value.Add(deck.Dequeue());
